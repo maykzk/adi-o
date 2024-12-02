@@ -1,0 +1,55 @@
+CREATE DATABASE sistema_funcionarios;
+
+
+/////////////////////////////////
+USE sistema_funcionarios;
+/////////////////////////////////
+
+CREATE TABLE funcionarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,     -- Campo para o ID do funcionário
+    nome VARCHAR(255) NOT NULL,            -- Campo para o nome do funcionário
+    cpf VARCHAR(14) NOT NULL UNIQUE,       -- Campo para o CPF (único)
+    salario DECIMAL(10, 2) NOT NULL,       -- Campo para o salário
+    email VARCHAR(255) NOT NULL,           -- Campo para o e-mail
+    telefone VARCHAR(15) NOT NULL         -- Campo para o telefone
+);
+
+///////////////////////////////
+Confirmar a Criação da Tabela
+
+
+
+SHOW TABLES;
+
+///////////////////////
+Verificar a Estrutura da Tabela
+
+
+
+
+
+
+
+
+
+
+DESCRIBE funcionarios;
+
+
+/////////////////
+Inserir Dados na Tabela
+
+INSERT INTO funcionarios (nome, cpf, salario, email, telefone)
+VALUES ('João Silva', '123.456.789-00', 2500.50, 'joao.silva@email.com', '(11) 99999-9999');
+
+
+//////////////////////////////////
+
+
+ Listar os Funcionários
+
+
+
+SELECT * FROM fucionarios;
+
+////////////////////////
