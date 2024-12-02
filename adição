@@ -1,0 +1,83 @@
+
+
+<div class="form-container" id="employeeForm">
+        <h2>Adicionar Funcionário</h2>
+        <div class="form-group">
+            <label>Nome completo:</label>
+            <input type="text" id="nameInput">
+        </div>
+        <div class="form-group">
+            <label>CPF:</label>
+            <input type="text" id="cpfInput">
+        </div>
+        <div class="form-group">
+            <label>ID:</label>
+            <input type="text" id="idInput">
+        </div>
+        <div class="form-group">
+            <label>Salário:</label>
+            <input type="text" id="salaryInput">
+        </div>
+        <div class="form-group">
+            <label>E-mail:</label>
+            <input type="text" id="emailInput">
+        </div>
+        <div class="form-group">
+            <label>Número de telefone:</label>
+            <input type="text" id="phoneInput">
+        </div>
+        <div class="form-buttons">
+            <button class="back" id="backBtn">Voltar</button>
+            <button class="add" id="saveBtn">Adicionar</button>
+        </div>
+    </div>
+    <script>
+        const addEmployeeBtn = document.getElementById('addEmployeeBtn');
+        const employeeList = document.getElementById('employeeList');
+        const employeeForm = document.getElementById('employeeForm');
+        const backBtn = document.getElementById('backBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        addEmployeeBtn.addEventListener('click', function() {
+            employeeForm.style.display = 'block';
+            employeeList.style.display = 'none';
+        });
+        backBtn.addEventListener('click', function() {
+            employeeForm.style.display = 'none';
+            employeeList.style.display = 'block';
+        });
+        saveBtn.addEventListener('click', function() {
+            const name = document.getElementById('nameInput').value;
+            if (name) {
+                const newEmployee = document.createElement('div');
+                newEmployee.classList.add('list-item');
+                newEmployee.innerHTML = `
+                    <span>${name}</span>
+                    <div>
+                        <button class="add">"+"</button>
+                        <button class="delete">x</button>
+                    </div>
+                `;
+                employeeList.appendChild(newEmployee);
+                document.getElementById('nameInput').value = '';
+                document.getElementById('cpfInput').value = '';
+                document.getElementById('idInput').value = '';
+                document.getElementById('salaryInput').value = '';
+                document.getElementById('emailInput').value = '';
+                document.getElementById('phoneInput').value = '';
+                employeeForm.style.display = 'none';
+                employeeList.style.display = 'block';
+                const deleteBtn = newEmployee.querySelector('.delete');
+                deleteBtn.addEventListener('click', function() {
+                    newEmployee.remove();
+                });
+            } else {
+                alert('Por favor, insira o nome do funcionário!');
+            }
+        });
+        employeeList.addEventListener('click', function(event) {
+            if (event.target.classList.contains('delete')) {
+                const listItem = event.target.closest('.list-item');
+                listItem.remove();
+            }
+        });
+    </script>
