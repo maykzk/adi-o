@@ -1,0 +1,55 @@
+package dao;
+
+import modelos.Funcionario;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class FuncionarioDAO {
+    private Connection conexao;
+
+    public FuncionarioDAO(Connection conexao) {
+        this.conexao = conexao;
+    }
+
+    public void adicionarFuncionario(Funcionario funcionario) throws SQLException {
+        String sql = "INSERT INTO funcionarios (nome, cpf, salario, email, telefone) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, funcionario.getNomeCompleto());
+            stmt.setString(2, funcionario.getCpf());
+            stmt.setDouble(3, funcionario.getSalario());
+            stmt.setString(4, funcionario.getEmail());
+            stmt.setString(5, funcionario.getTelefone());
+            stmt.executeUpdate();
+        }
+    }
+
+    public List<Funcionario> listarFuncionarios() throws SQLException {
+        List<Funcionario> funcionarios = new ArrayList<>();
+        String sql = "SELECT * FROM funcionarios";
+        try (Statement stmt = conexao.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Funcionario funcionario = new Funcionario(
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("cpf"),
+                        rs.getDouble("salario"),
+                        rs.getString("email"),
+                        rs.getString("telefone")
+                );
+                funcionarios.add(funcionario);
+            }
+        }
+        return funcionarios;
+    }
+
+    public void deletarFuncionario(int id) throws SQLException {
+        String sql = "DELETE FROM funcionarios WHERE id = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
+    }
+}
